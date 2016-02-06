@@ -15,24 +15,10 @@
  */
 package jp.pigumer.app;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.security.core.userdetails.User;
 
-/**
- * RESTレスポンス.
- * 
- * @author takesection@gmail.com
- */
-public class AjaxResponse {
+public interface ExampleUserDetailsService {
 
-    @JsonProperty("USER_ID")
-    private String userId;
-    
-    public AjaxResponse(String userId) {
-        this.userId = userId;
-    }
-    
-    public String getUserId() {
-        return userId;
-    }
+    User loadUser(String username);
     
 }
