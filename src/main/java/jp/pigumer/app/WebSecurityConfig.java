@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -13,15 +12,15 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
-    private ExampleUserDetailsService userDetailsService;
+    private ExampleUserDetailsServiceImpl userDetailsService;
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.addFilterAfter(new ExampleFilter(authenticationManager()), BasicAuthenticationFilter.class);
+        http.regexMatcher("^/secure.*").addFilterAfter(exampleFilter(), BasicAuthenticationFilter.class);
+        http.csrf().disable();
     }
     
     @Override
@@ -35,6 +34,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         ExampleAuthenticationProvider provider = new ExampleAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         return provider;
+    }
+    
+    @Bean
+    public ExampleFilter exampleFilter() throws Exception {
+        ExampleFilter exampleFilter = new ExampleFilter();
+        exampleFilter.setAuthenticationManager(authenticationManagerBean());
+        return exampleFilter;
     }
     
     @Bean
