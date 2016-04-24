@@ -16,19 +16,24 @@
 package jp.pigumer.app;
 
 import java.util.Objects;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jp.pigumer.security.WebSecurityConfig;
+
 @SpringBootApplication
 @Controller
-public class Application {
+public class Application extends SpringBootServletInitializer {
     
     private static final Logger LOG = LoggerFactory.getLogger(Application.class);
     
@@ -45,7 +50,12 @@ public class Application {
         return "index";
     }
     
-    public static void main(String[] args) {
+    @Bean
+    public static WebSecurityConfig securityConfig() {
+    	return new WebSecurityConfig();
+    }
+    
+	public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 }

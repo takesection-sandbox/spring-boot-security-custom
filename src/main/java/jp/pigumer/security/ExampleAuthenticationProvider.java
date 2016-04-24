@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jp.pigumer.app;
+package jp.pigumer.security;
 
 import java.util.Objects;
 import org.slf4j.Logger;
@@ -30,10 +30,10 @@ public class ExampleAuthenticationProvider implements AuthenticationProvider, In
 
     private static final Logger LOG = LoggerFactory.getLogger(ExampleAuthenticationProvider.class);
 
-    private ExampleUserDetailsServiceImpl userDetailsService;
+    private ExampleUserDetailsService userDetailsService;
     
     @Autowired
-    public void setUserDetailsService(ExampleUserDetailsServiceImpl userDetailsService) {
+    public void setUserDetailsService(ExampleUserDetailsService userDetailsService) {
         LOG.debug("serUserDetailsService: " + Objects.toString(userDetailsService, ""));
         this.userDetailsService = userDetailsService;
     }

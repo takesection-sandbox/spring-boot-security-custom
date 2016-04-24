@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jp.pigumer.app;
+package jp.pigumer.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,9 +29,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    
-    @Autowired
-    private ExampleUserDetailsServiceImpl userDetailsService;
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -50,8 +46,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public ExampleAuthenticationProvider exampleAuthenticationProvider() {
         ExampleAuthenticationProvider provider = new ExampleAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService);
+        provider.setUserDetailsService(exampleUserDetailsService());
         return provider;
+    }
+    
+    @Bean
+    public ExampleUserDetailsService exampleUserDetailsService() {
+    	return new ExampleUserDetailsServiceImpl();
     }
     
     @Bean

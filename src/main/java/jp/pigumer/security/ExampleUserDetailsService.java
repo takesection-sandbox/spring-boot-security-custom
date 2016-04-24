@@ -13,31 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jp.pigumer.app;
+package jp.pigumer.security;
 
-import java.util.Collection;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-public class ExampleAuthentication extends AbstractAuthenticationToken {
+public interface ExampleUserDetailsService {
 
-    private final Object principal;
+    User loadUser(String username);
     
-    ExampleAuthentication(User user, Collection<GrantedAuthority> authorities) {
-        super(authorities);
-        principal = user;
-        super.setAuthenticated(true);
-    }
-    
-    @Override
-    public Object getCredentials() {
-        return "";
-    }
-
-    @Override
-    public Object getPrincipal() {
-        return principal;
-    }
-
 }
