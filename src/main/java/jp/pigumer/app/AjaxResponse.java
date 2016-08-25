@@ -19,8 +19,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * RESTレスポンス.
- * 
- * @author takesection@gmail.com
  */
 public class AjaxResponse {
 
